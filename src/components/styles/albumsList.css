@@ -1,0 +1,9 @@
+.item {
+    display: flex;
+    justify-content: space-between
+}
+
+.itemButtons {
+    display: flex;
+    flex-direction: column;
+}
