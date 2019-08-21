@@ -12,15 +12,18 @@ let albumsState = {
 }
 
 const albumsReducer = (state = albumsState, action) => {
+    let newState = {...state}
     switch (action.type) {
         case GET_ALBUMS:
             return {...state, albums: action.payload, loading: false};
         case EDIT_ALBUM:
             return state;
         case ADD_ALBUM:
-            return state;
+            newState.albums.push(action.payload)
+            return newState;
         case DELETE_ALBUM:
-            return state;
+            newState.albums = newState.albums.filter(album => album.id !== action.payload)
+            return newState;
         default:
             return state;
     }

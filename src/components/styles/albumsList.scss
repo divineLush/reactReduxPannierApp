@@ -1,0 +1,17 @@
+.list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+
+    &Item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 20px 0;
+
+        &Buttons {
+            display: flex;
+            flex-direction: column;
+        } 
+    }
+}

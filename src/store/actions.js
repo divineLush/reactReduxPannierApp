@@ -57,13 +57,13 @@ export function editAlbum(album) {
 export function addAlbum(album) {
     return {
         type: ADD_ALBUM,
-        payload: { album }
+        payload: album
     }
 }
 
 export function deleteAlbum(albumId) {
     return {
         type: DELETE_ALBUM,
-        payload: { albumId }
+        payload: albumId
     }
 }

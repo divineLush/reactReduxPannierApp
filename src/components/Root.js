@@ -1,32 +1,19 @@
 import React from 'react';
-import { genres } from '../assets/consts';
 import AlbumsList from './AlbumsList';
 import Header from './Header';
 import * as Actions from '../store/actions';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
+import Modal from './Modal';
+import './styles/root.scss';
+import Button from 'react-bootstrap/Button';
 
 class Root extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      albums: [
-        {
-          name: 'Scream Bloody Gore',
-          artist: 'Death',
-          genre: genres[0]
-        },
-        {
-          name: 'Harmony Corruption',
-          artist: 'Napalm Death',
-          genre: genres[2]
-        },
-        {
-          name: 'Black Shinig Leather',
-          artist: 'Carpathian Forest',
-          genre: genres[1]
-        }
-      ]
+      isDeleteModalOpened: false,
+      isAddModalOpened: false
     }
   }
 
@@ -34,12 +21,35 @@ class Root extends React.Component {
     await this.props.getAlbums()
   }
 
+  setDeleteModal(isDeleteModalOpened) {
+    this.setState({ isDeleteModalOpened })      
+  }
+
+  setAddModal(isAddModalOpened) {
+    this.setState({ isAddModalOpened })
+  }
+
   render () {
     return (
         <div>
             <Header />
-            <button>Add new album</button>
-            <AlbumsList albums={ this.props.albums } />
+            <div className="content">
+              <div className="contentButton">
+                <Button
+                  variant="outline-dark" 
+                  size="lg" block 
+                  onClick={ () => this.setAddModal(true) }
+                >
+                  Add new album
+                </Button>
+              </div>
+              <Modal 
+                isOpen={ this.state.isAddModalOpened } 
+                title={ 'Add new album' }
+                onClose={ () => this.setAddModal(false) } 
+              />
+              <AlbumsList albums={ this.props.albums } />
+            </div>
         </div>
     );
   }

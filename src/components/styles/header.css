@@ -1,6 +1,14 @@
+@font-face {
+    font-family: "Font";
+    src: url("../../assets/fonts/Crucifixion-Regular.otf") format("opentype");
+}
+
 .header {
     background-color: #333;
     color: #9de0a2;
     text-align: center;
-    padding: 10px;
+    padding: 20px;
+    font-family: 'Font', sans-serif;
+    font-weight: normal;
+    font-style: normal; 
 }
