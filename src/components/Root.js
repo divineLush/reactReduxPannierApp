@@ -4,7 +4,7 @@ import Header from './Header';
 import * as Actions from '../store/actions';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
-import Modal from './Modal';
+import AddModal from './Modal';
 import './styles/root.scss';
 import Button from 'react-bootstrap/Button';
 
@@ -43,7 +43,7 @@ class Root extends React.Component {
                   Add new album
                 </Button>
               </div>
-              <Modal 
+              <AddModal 
                 isOpen={ this.state.isAddModalOpened } 
                 title={ 'Add new album' }
                 onClose={ () => this.setAddModal(false) } 

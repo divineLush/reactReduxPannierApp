@@ -19,7 +19,9 @@ const albumsReducer = (state = albumsState, action) => {
         case EDIT_ALBUM:
             return state;
         case ADD_ALBUM:
-            newState.albums.push(action.payload)
+            let albums = [...newState.albums]
+            albums.push(action.payload)
+            newState.albums = albums
             return newState;
         case DELETE_ALBUM:
             newState.albums = newState.albums.filter(album => album.id !== action.payload)

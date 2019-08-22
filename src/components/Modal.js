@@ -16,7 +16,7 @@ class AddModal extends Component {
             name: null,
             artist: '',
             genre: genres[0],
-            releaseDate: moment().format(format),
+            releaseDate: null,
             label: '',
             price: null,
             id: uuid()
@@ -110,8 +110,12 @@ class AddModal extends Component {
         )
     }
 
-    /*
-    <Alert 
+    render() {
+        return (
+            <Modal show={ this.props.isOpen }>
+                <Modal.Header>
+                    <Modal.Title>{ this.props.title }</Modal.Title>
+                    <Alert 
                         show={ this.state.isAlertVisible } 
                         variant="danger"
                     >
@@ -119,13 +123,6 @@ class AddModal extends Component {
                             Please select something different...
                         </Alert.Heading>
                     </Alert>
-    */
-
-    render() {
-        return (
-            <Modal show={ this.props.isOpen }>
-                <Modal.Header>
-                    <Modal.Title>{ this.props.title }</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>{ this.form() }</Modal.Body>
                 <Modal.Footer>
