@@ -4,8 +4,16 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
 import './styles/albumsList.scss';
 import Button from 'react-bootstrap/Button';
+import EditModal from '../components/EditModal';
 
 class AlbumsList extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isModalOpened: false
+        }
+    }
+
     render() {
         return (
                 <div className="list">
@@ -18,8 +26,9 @@ class AlbumsList extends Component {
                                     <div className="listItemInfo">
                                         <p>Name: { album.name }</p>
                                         <p>Artist: { album.artist }</p>
-                                        <p>Release date: { album.releaseDate }</p>
                                         <p>Genre: { album.genre }</p>
+                                        <p>Release date: { album.releaseDate }</p>
+                                        <p>Label: { album.label }</p>
                                         <p>Price: { album.price }$</p>
                                     </div>
                                     <div className="listItemButtons">
@@ -29,8 +38,18 @@ class AlbumsList extends Component {
                                         >
                                             Delete
                                         </Button>
-                                        <Button variant="outline-info">Edit</Button>
+                                        <Button 
+                                            variant="outline-secondary"
+                                            onClick={ () => this.setState({ isModalOpened: true }) }
+                                        >
+                                            Edit
+                                        </Button>
                                     </div>
+                                    <EditModal 
+                                        show={ this.state.isModalOpened } 
+                                        album={ album }
+                                        onClose={ () => this.setState({ isModalOpened: false }) } 
+                                    />
                                 </div>
                             )
                     }

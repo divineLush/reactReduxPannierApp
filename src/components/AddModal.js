@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import * as Actions from '../store/actions';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
@@ -114,7 +114,7 @@ class AddModal extends Component {
         return (
             <Modal show={ this.props.isOpen }>
                 <Modal.Header>
-                    <Modal.Title>{ this.props.title }</Modal.Title>
+                    <Modal.Title>Add new album</Modal.Title>
                     <Alert 
                         show={ this.state.isAlertVisible } 
                         variant="danger"
@@ -136,7 +136,7 @@ class AddModal extends Component {
                         variant="dark"
                         onClick={ this.handleAddButton }
                     >
-                        Add Album
+                        Add album
                     </Button>
                 </Modal.Footer>
             </Modal>

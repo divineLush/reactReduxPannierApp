@@ -1,7 +1,7 @@
 .list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+    grid-gap: 20px;
 
     &Item {
         display: flex;
@@ -12,6 +12,10 @@
         &Buttons {
             display: flex;
             flex-direction: column;
+
+            Button {
+                margin: 5px 0;
+            }
         } 
     }
 }

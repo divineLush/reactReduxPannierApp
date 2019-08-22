@@ -1,10 +1,9 @@
 import React from 'react';
 import AlbumsList from './AlbumsList';
-import Header from './Header';
 import * as Actions from '../store/actions';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
-import AddModal from './Modal';
+import AddModal from './AddModal';
 import './styles/root.scss';
 import Button from 'react-bootstrap/Button';
 
@@ -12,7 +11,6 @@ class Root extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isDeleteModalOpened: false,
       isAddModalOpened: false
     }
   }
@@ -21,32 +19,22 @@ class Root extends React.Component {
     await this.props.getAlbums()
   }
 
-  setDeleteModal(isDeleteModalOpened) {
-    this.setState({ isDeleteModalOpened })      
-  }
-
-  setAddModal(isAddModalOpened) {
-    this.setState({ isAddModalOpened })
-  }
-
   render () {
     return (
         <div>
-            <Header />
             <div className="content">
               <div className="contentButton">
                 <Button
-                  variant="outline-dark" 
-                  size="lg" block 
-                  onClick={ () => this.setAddModal(true) }
+                  variant="outline-dark"
+                  size="lg"  
+                  onClick={ () => this.setState({ isAddModalOpened: true }) }
                 >
                   Add new album
                 </Button>
               </div>
-              <AddModal 
+              <AddModal
                 isOpen={ this.state.isAddModalOpened } 
-                title={ 'Add new album' }
-                onClose={ () => this.setAddModal(false) } 
+                onClose={ () => this.setState({ isAddModalOpened: false }) } 
               />
               <AlbumsList albums={ this.props.albums } />
             </div>

@@ -1,0 +1,14 @@
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    h1 {
+        font-family: 'Font', sans-serif;
+        font-weight: normal;
+        font-style: normal;
+        padding: 40px 0;
+        color: #bb0a1e;
+    }
+}
