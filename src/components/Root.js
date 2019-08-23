@@ -11,7 +11,8 @@ class Root extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isAddModalOpened: false
+      isAddModalOpened: false,
+      isDeleteModalOpened: false
     }
   }
 

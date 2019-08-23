@@ -3,15 +3,43 @@ import * as Actions from '../store/actions';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
 import './styles/albumsList.scss';
-import Button from 'react-bootstrap/Button';
+import { Button, Modal } from 'react-bootstrap';
 import EditModal from '../components/EditModal';
 
 class AlbumsList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isModalOpened: false
+            isModalOpened: false,
+            isDeleteModalOpened: false
         }
+    }
+
+    deleteModal(albumId) {
+        return (
+            <Modal show={ this.state.isDeleteModalOpened }>
+                <Modal.Header>Sure?</Modal.Header>
+                <Modal.Footer>
+                <Button 
+                        variant="light"
+                        onClick={ () => this.setState({ isDeleteModalOpened: false }) }
+                    >
+                        Oh no!
+                    </Button>
+                    <Button 
+                        variant="dark"
+                        onClick={ () => this.handleDeleteButton(albumId) }
+                    >
+                        Yes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+
+    handleDeleteButton(albumId) {
+        this.props.deleteAlbum(albumId);
+        this.setState({ isDeleteModalOpened: false })
     }
 
     render() {
@@ -34,7 +62,7 @@ class AlbumsList extends Component {
                                     <div className="listItemButtons">
                                         <Button 
                                             variant="outline-danger"
-                                            onClick={ () => this.props.deleteAlbum(album.id) }
+                                            onClick={ () => this.setState({ isDeleteModalOpened: true }) }
                                         >
                                             Delete
                                         </Button>
@@ -45,6 +73,7 @@ class AlbumsList extends Component {
                                             Edit
                                         </Button>
                                     </div>
+                                    { this.deleteModal(album.id) }
                                     <EditModal 
                                         show={ this.state.isModalOpened } 
                                         album={ album }
