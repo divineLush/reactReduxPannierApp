@@ -33,7 +33,7 @@ class Root extends React.Component {
                 </Button>
               </div>
               <AddModal
-                isOpen={ this.state.isAddModalOpened } 
+                show={ this.state.isAddModalOpened } 
                 onClose={ () => this.setState({ isAddModalOpened: false }) } 
               />
               <AlbumsList albums={ this.props.albums } />

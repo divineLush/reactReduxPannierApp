@@ -3,7 +3,12 @@ export const genres = [
     'black metal',
     'deathgrind',
     'grindcore',
-    'goregrind'
+    'goregrind',
+    'doom metal',
+    'stoner doom',
+    'funeral doom',
+    'thrash metal',
+    'power metal',
 ]
 
 export const format = 'D-MM-YYYY'

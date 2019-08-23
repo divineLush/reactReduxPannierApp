@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as Actions from '../store/actions';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux';
-import { Button, Modal, Form, Alert } from 'react-bootstrap';
+import { Button, Modal, Form } from 'react-bootstrap';
 import moment from 'moment';
 import { genres, format } from '../assets/consts';
 
@@ -12,14 +12,17 @@ class AddModal extends Component {
     constructor(props){
         super(props)
         this.state = {
-            isAlertVisible: false,
             name: null,
             artist: '',
             genre: genres[0],
             releaseDate: null,
             label: '',
             price: null,
-            id: uuid()
+            id: uuid(),
+            isFormValid: false,
+            isNameValid: false,
+            isPriceValid: false,
+            isReleaseDateValid: false,
         }
     }
 
@@ -33,23 +36,31 @@ class AddModal extends Component {
             price: this.state.price,
             id: this.state.id
         }
-        if (this.validateForm()) {
-            this.props.addAlbum(album)
-            this.setState({ isAlertVisible: false })
-            this.props.onClose()
-        } else {
-            this.setState({ isAlertVisible: true })
-        } 
+        this.props.addAlbum(album)
+        this.props.onClose() 
     }
 
     validateForm() {
-        if (this.state.name && this.state.price && this.state.releaseDate) {
-            const name = this.state.name.length >= 5 && this.state.name.length <= 40;
-            const price = this.state.price > 0;
-            const date = moment(this.state.releaseDate) > moment();
-            return name && price && date
-    
-        } else return false
+        this.setState({ 
+            isFormValid: this.state.isNameValid 
+                && this.state.isPriceValid 
+                && this.state.isReleaseDateValid       
+        })
+    }
+
+    validateName() {
+        const valid = this.state.name.length >= 5 && this.state.name.length <= 40;
+        this.setState({ isNameValid: valid }, this.validateForm())
+    }
+
+    validatePrice() {
+        const valid = this.state.price > 0;
+        this.setState({ isPriceValid: valid }, this.validateForm())
+    }
+
+    validateReleaseDate() {
+        const valid = moment(this.state.releaseDate).format(format) > moment().format(format);
+        this.setState({ isReleaseDateValid: valid }, this.validateForm())
     }
 
     form() {
@@ -59,7 +70,7 @@ class AddModal extends Component {
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                         name="Name"
-                        onChange={ (e) => { e.preventDefault(); this.setState({ name: e.target.value }) } }
+                        onChange={ (e) => { e.preventDefault(); this.setState({ name: e.target.value }, () => this.validateName()) } }
                     />
                 </Form.Group>
                 <Form.Group>
@@ -88,7 +99,7 @@ class AddModal extends Component {
                     <Form.Control
                         type="date"
                         name="ReleaseDate"
-                        onChange={ (e) => { e.preventDefault(); this.setState({ releaseDate: moment(e.target.value).format(format) }) } }
+                        onChange={ (e) => { e.preventDefault(); this.setState({ releaseDate: moment(e.target.value).format(format) }, () => this.validateReleaseDate()) } }
                     />
                 </Form.Group>
                 <Form.Group>
@@ -103,7 +114,7 @@ class AddModal extends Component {
                     <Form.Control
                         type="number"
                         name="Price"
-                        onChange={ (e) => { e.preventDefault(); this.setState({ price: e.target.value }) } }
+                        onChange={ (e) => { e.preventDefault(); this.setState({ price: e.target.value }, () => this.validatePrice()) } }
                     />
                 </Form.Group>
             </Form>
@@ -112,17 +123,9 @@ class AddModal extends Component {
 
     render() {
         return (
-            <Modal show={ this.props.isOpen }>
+            <Modal show={ this.props.show }>
                 <Modal.Header>
                     <Modal.Title>Add new album</Modal.Title>
-                    <Alert 
-                        show={ this.state.isAlertVisible } 
-                        variant="danger"
-                    >
-                        <Alert.Heading>
-                            Please select something different...
-                        </Alert.Heading>
-                    </Alert>
                 </Modal.Header>
                 <Modal.Body>{ this.form() }</Modal.Body>
                 <Modal.Footer>
@@ -134,6 +137,7 @@ class AddModal extends Component {
                     </Button>
                     <Button 
                         variant="dark"
+                        disabled={ !this.state.isFormValid }
                         onClick={ this.handleAddButton }
                     >
                         Add album
